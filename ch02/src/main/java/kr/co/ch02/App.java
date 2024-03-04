@@ -45,7 +45,7 @@ public class App
         // 스프링 컨테이너 생성
         ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
-        // 빈 주입
+        // 빈 주입(Spring 컨테이너에서 Hello Bean 의 인스턴스를 검색) (AppConfig 클래스의 hello() 메서드를 호출하는 것과 동일)
         Hello hello = context.getBean(Hello.class);
         hello.show();
 
