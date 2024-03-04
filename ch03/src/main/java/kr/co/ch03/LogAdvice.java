@@ -16,16 +16,17 @@ public class LogAdvice {
 
 
 
+
     @Before("insertPointcut() || selectPointcut()")
     public void beforeLog(){
-        System.out.println("------------------------------");
+        System.out.println("-----------------------");
         System.out.println("부가기능 - beforeLog()...");
     }
 
     @After("insertPointcut() || selectPointcut()")
     public void afterLog(){
         System.out.println("부가기능 - afterLog()...");
-        System.out.println("------------------------------");
+        System.out.println("-----------------------");
     }
 
     @AfterReturning("insertPointcut()")
@@ -35,7 +36,6 @@ public class LogAdvice {
 
     @Around("insertPointcut()")
     public void aroundLog(ProceedingJoinPoint pjp) throws Throwable {
-        
         System.out.println("부가기능 - aroundLog()...1");
         pjp.proceed(); // 핵심관심 실행
         System.out.println("부가기능 - aroundLog()...2");
@@ -44,7 +44,8 @@ public class LogAdvice {
     @AfterThrowing("selectPointcut()")
     public void afterThrowLog(){
         System.out.println("부가기능 - afterThrowLog()...");
-
     }
+
+
 
 }

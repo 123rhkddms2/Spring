@@ -12,7 +12,7 @@ public class BasicService {
     public void select(String id){
         System.out.println("핵심기능 - select()...");
         if(id.equals("a101")){
-            System.out.println("핵심기능 - id " + id);
+            System.out.println("핵심기능 - id : " + id);
         }
     }
 
@@ -23,5 +23,6 @@ public class BasicService {
     public void delete(){
         System.out.println("핵심기능 - delete()...");
     }
+
 
 }
