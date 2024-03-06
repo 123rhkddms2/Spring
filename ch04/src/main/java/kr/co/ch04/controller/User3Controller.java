@@ -38,7 +38,7 @@ public class User3Controller {
     public String list(Model model){
 
         List<User3DTO> users = service.selectUser3s();
-        
+
         // Model 참조(Controller 데이터를 View에서 참조)
         model.addAttribute("users", users);
 
@@ -53,7 +53,7 @@ public class User3Controller {
 
         return "redirect:/user3/list";
     }
-    
+
     @GetMapping("/user3/modify")
     public String modify(@RequestParam("uid") String uid, Model model){
         System.out.println("uid : " + uid);
@@ -62,7 +62,7 @@ public class User3Controller {
         model.addAttribute(user3DTO);
 
         return "/user3/modify";
-        
+
     }
 
     @PostMapping("/user3/modify")
