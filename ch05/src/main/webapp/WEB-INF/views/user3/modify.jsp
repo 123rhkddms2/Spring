@@ -27,7 +27,7 @@
         </tr>
         <tr>
             <td>주소</td>
-            <td><input type="text" name="addr" value="${user3DTO.age}"></td>
+            <td><input type="text" name="addr" value="${user3DTO.addr}"></td>
         </tr>
         <tr>
             <td colspan="2" align="right"><input type="submit" value="수정"></td>

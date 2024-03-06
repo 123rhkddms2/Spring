@@ -1,13 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>user1::register</title>
+    <title>user4::register</title>
 </head>
 <body>
-<h3>user1 등록</h3>
+<h3>user4 등록</h3>
 <a href="/ch05">메인</a>
-<a href="/ch05/user1/list">목록</a>
-<form action="/ch05/user1/register" method="post">
+<a href="/ch05/user4/list">목록</a>
+<form action="/ch05/user4/register" method="post">
     <table border="1">
         <tr>
             <td>아이디</td>
@@ -18,16 +18,20 @@
             <td><input type="text" name="name"></td>
         </tr>
         <tr>
-            <td>생년월일</td>
-            <td><input type="date" name="birth"></td>
+            <td>성별</td>
+            <td><input type="text" name="gender"></td>
+        </tr>
+        <tr>
+            <td>나이</td>
+            <td><input type="number" name="age"></td>
         </tr>
         <tr>
             <td>휴대폰</td>
             <td><input type="text" name="hp"></td>
         </tr>
         <tr>
-            <td>나이</td>
-            <td><input type="number" name="age"></td>
+            <td>주소</td>
+            <td><input type="text" name="addr"></td>
         </tr>
         <tr>
             <td colspan="2" align="right"><input type="submit" value="등록"></td>

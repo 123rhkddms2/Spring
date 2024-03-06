@@ -4,9 +4,10 @@ public class User4DTO {
 
     private String uid;
     private String name;
-    private String birth;
-    private String hp;
+    private String gender;
     private int age;
+    private String hp;
+    private String addr;
 
     public String getUid() {
         return uid;
@@ -24,20 +25,12 @@ public class User4DTO {
         this.name = name;
     }
 
-    public String getBirth() {
-        return birth;
+    public String getGender() {
+        return gender;
     }
 
-    public void setBirth(String birth) {
-        this.birth = birth;
-    }
-
-    public String getHp() {
-        return hp;
-    }
-
-    public void setHp(String hp) {
-        this.hp = hp;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public int getAge() {
@@ -48,14 +41,31 @@ public class User4DTO {
         this.age = age;
     }
 
+    public String getHp() {
+        return hp;
+    }
+
+    public void setHp(String hp) {
+        this.hp = hp;
+    }
+
+    public String getAddr() {
+        return addr;
+    }
+
+    public void setAddr(String addr) {
+        this.addr = addr;
+    }
+
     @Override
     public String toString() {
-        return "User1DTO{" +
+        return "User4DTO{" +
                 "uid='" + uid + '\'' +
                 ", name='" + name + '\'' +
-                ", birth='" + birth + '\'' +
-                ", hp='" + hp + '\'' +
+                ", gender='" + gender + '\'' +
                 ", age=" + age +
+                ", hp='" + hp + '\'' +
+                ", addr='" + addr + '\'' +
                 '}';
     }
 }
