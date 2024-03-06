@@ -11,16 +11,7 @@
   <component name="ChangeListManager">
     <list default="true" id="2fc5cbbc-224f-40b5-ae7e-8c223fcd655a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/ch05/controller/User3Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/ch05/controller/User3Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/ch05/dto/User4DTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/ch05/dto/User4DTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/ch05/dto/User5DTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/ch05/dto/User5DTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/user3/modify.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/user3/modify.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/user4/list.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/user4/list.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/user4/modify.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/user4/modify.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/user4/register.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/user4/register.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/user5/list.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/user5/list.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/user5/modify.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/user5/modify.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/user5/register.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/user5/register.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +57,7 @@
     &quot;Tomcat Server.ch05.executor&quot;: &quot;Run&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/java/Desktop/Workspace/Spring/ch05/src/main/resources/mappers&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/123rh/Workspace/Spring/ch05&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -198,6 +189,8 @@
       <workItem from="1709684368334" duration="3410000" />
       <workItem from="1709687846250" duration="11184000" />
       <workItem from="1709709229893" duration="5930000" />
+      <workItem from="1709745026280" duration="41000" />
+      <workItem from="1709745093574" duration="430000" />
     </task>
     <servers />
   </component>

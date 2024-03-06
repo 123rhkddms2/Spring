@@ -23,7 +23,7 @@
         </tr>
         <tr>
             <td>나이</td>
-            <td><input type="number" name="age value="${user5DTO.age}"></td>
+            <td><input type="number" name="age" value="${user5DTO.age}"></td>
         </tr>
         <tr>
             <td>주소</td>
