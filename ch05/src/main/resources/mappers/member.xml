@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+    - MyBatis @Mapper interface일 경우 namespace값은 패키지포함 해당 Mapper 파일 설정
+    - 각 SQL id값은 Mapper 파일의 메서드명 설정
+-->
+<mapper namespace="kr.co.ch05.mapper.MemberMapper">
+
+    <insert id="insertMember">
+        INSERT INTO `member` SET
+        `uid`=#{uid},
+        `name`=#{name},
+        `hp`=#{hp},
+        `pos`=#{pos},
+        `dep`=#{dep},
+        `rdate`=NOW();
+    </insert>
+    <select id="selectMembers" resultType="kr.co.ch05.dto.MemberDTO">
+        SELECT * FROM `member`;
+    </select>
+    <select id="selectMembersForSearch" resultType="kr.co.ch05.dto.MemberDTO">
+        SELECT * FROM `member`
+        <where>
+            <if test="type == 'uid' and value != ''">
+                `uid`=#{value}
+            </if>
+            <if test="type == 'name' and value != ''">
+                `name`=#{value}
+            </if>
+            <if test="type == 'hp' and value != ''">
+                `hp`=#{value}
+            </if>
+
+            <if test="pos != null">
+                AND `pos` IN
+                <foreach item="item" collection="pos" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+    <select id="selectMember" resultType="kr.co.ch05.dto.MemberDTO">
+        SELECT * FROM `member` WHERE `uid`=#{uid};
+    </select>
+
+    <resultMap id="parentMap" type="kr.co.ch05.dto.ParentDTO">
+        <result property="pid" column="pid"/>
+        <result property="name" column="name"/>
+        <result property="birth" column="birth"/>
+        <result property="addr" column="addr"/>
+
+        <collection property="childs" ofType="kr.co.ch05.dto.ChildDTO">
+            <result property="cid" column="cid"/>
+            <result property="name" column="name"/>
+            <result property="hp" column="hp"/>
+            <result property="parent" column="parent"/>
+        </collection>
+    </resultMap>
+    <select id="selectParentWithChild" resultMap="parentMap">
+        SELECT * FROM `parent` AS p
+        JOIN `child` AS c
+        ON p.pid = c.parent;
+    </select>
+
+    <update id="updateMember">
+        UPDATE `member` SET
+        `name`=#{name},
+        `hp`=#{hp},
+        `pos`=#{pos},
+        `dep`=#{dep}
+        WHERE
+        `uid`=#{uid};
+    </update>
+    <delete id="deleteMember">
+        DELETE FROM `member` WHERE `uid`=#{uid};
+    </delete>
+</mapper>

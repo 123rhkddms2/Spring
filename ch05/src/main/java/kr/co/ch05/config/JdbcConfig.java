@@ -20,10 +20,11 @@ public class JdbcConfig {
 
         // DBCP2 옵션 설정
         dataSource.setMaxTotal(13); // 최대 연결 풀 크기 설정
-        dataSource.setMaxIdle(13); // 최대 유효 연결 퓰 크기 설정
+        dataSource.setMaxIdle(13);  // 최대 유휴 연결 풀 크기 설정
 
         return dataSource;
     }
+
     @Bean
     public JdbcTemplate jdbcTemplate(DataSource dataSource){
         return new JdbcTemplate(dataSource);

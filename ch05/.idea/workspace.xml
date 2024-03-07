@@ -11,7 +11,11 @@
   <component name="ChangeListManager">
     <list default="true" id="2fc5cbbc-224f-40b5-ae7e-8c223fcd655a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/user5/modify.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/user5/modify.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/ch05/config/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/ch05/config/AppConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/ch05/config/JdbcConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/ch05/config/JdbcConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/ch05/config/MyWebAppInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/ch05/config/MyWebAppInitializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,8 +26,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="spring-beans.schema" />
         <option value="Class" />
+        <option value="spring-beans.schema" />
       </list>
     </option>
   </component>
@@ -57,7 +61,7 @@
     &quot;Tomcat Server.ch05.executor&quot;: &quot;Run&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/123rh/Workspace/Spring/ch05&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/java/Desktop/Workspace/Spring/ch05/src/main/resources/mappers&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -76,7 +80,10 @@
       <recent name="C:\Users\java\Desktop\Workspace\Spring\ch05\src\main\webapp\WEB-INF\views\user1" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="kr.co.ch05.controller" />
       <recent name="kr.co.ch05.dto" />
+      <recent name="kr.co.ch05.service" />
+      <recent name="kr.co.ch05.mapper" />
     </key>
   </component>
   <component name="RunManager">
@@ -191,6 +198,12 @@
       <workItem from="1709709229893" duration="5930000" />
       <workItem from="1709745026280" duration="41000" />
       <workItem from="1709745093574" duration="430000" />
+      <workItem from="1709767087554" duration="15170000" />
+      <workItem from="1709783685215" duration="751000" />
+      <workItem from="1709784442298" duration="178000" />
+      <workItem from="1709784625837" duration="136000" />
+      <workItem from="1709784766374" duration="456000" />
+      <workItem from="1709785232860" duration="645000" />
     </task>
     <servers />
   </component>

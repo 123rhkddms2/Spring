@@ -10,18 +10,18 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "kr.co.ch05")
+@ComponentScan(basePackages = {"kr.co.ch05"})
 public class AppConfig implements WebMvcConfigurer {
 
     @Override
-    public void configureViewResolvers(ViewResolverRegistry registry){
+    public void configureViewResolvers(ViewResolverRegistry registry) {
         // ViewResolver 설정 - jsp 경로 위치 설정
         registry.jsp("/WEB-INF/views/", ".jsp");
     }
 
     @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry){
-        // ResourceHandler 설정 - 정적 리소스의 경로 위치 설정
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // ResourceHandler 설정 - 정적 리소스 경로 위치 설정
         registry.addResourceHandler("/**").addResourceLocations("/resources/");
     }
 }

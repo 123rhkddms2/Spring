@@ -22,6 +22,5 @@ public class MyWebAppInitializer implements WebApplicationInitializer {
         ServletRegistration.Dynamic servletRegistration = servletContext.addServlet("dispatcherServlet", dispatcherServlet);
         servletRegistration.setLoadOnStartup(1);
         servletRegistration.addMapping("/");
-
     }
 }
