@@ -11,11 +11,6 @@
   <component name="ChangeListManager">
     <list default="true" id="2fc5cbbc-224f-40b5-ae7e-8c223fcd655a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/ch05/config/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/ch05/config/AppConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/ch05/config/JdbcConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/ch05/config/JdbcConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/ch05/config/MyWebAppInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/ch05/config/MyWebAppInitializer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +56,7 @@
     &quot;Tomcat Server.ch05.executor&quot;: &quot;Run&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/java/Desktop/Workspace/Spring/ch05/src/main/resources/mappers&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/java/Desktop/Workspace/Spring/ch05&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -204,6 +199,13 @@
       <workItem from="1709784625837" duration="136000" />
       <workItem from="1709784766374" duration="456000" />
       <workItem from="1709785232860" duration="645000" />
+      <workItem from="1709794986236" duration="515000" />
+      <workItem from="1709795880717" duration="18000" />
+      <workItem from="1709795920770" duration="50000" />
+      <workItem from="1709796666429" duration="1205000" />
+      <workItem from="1709798462048" duration="1133000" />
+      <workItem from="1709799660544" duration="317000" />
+      <workItem from="1709855740727" duration="600000" />
     </task>
     <servers />
   </component>
