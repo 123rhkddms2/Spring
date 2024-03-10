@@ -11,7 +11,6 @@
   <component name="ChangeListManager">
     <list default="true" id="2fc5cbbc-224f-40b5-ae7e-8c223fcd655a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/ch05/config/JdbcConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/ch05/config/JdbcConfig.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -176,6 +175,13 @@
       </method>
     </configuration>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-17.0.9-corretto-17.0.9-4caba194b151-107bc6b7" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -205,6 +211,7 @@
       <workItem from="1709867146662" duration="81000" />
       <workItem from="1709879409579" duration="5237000" />
       <workItem from="1709886182975" duration="599000" />
+      <workItem from="1710072841720" duration="88000" />
     </task>
     <servers />
   </component>
