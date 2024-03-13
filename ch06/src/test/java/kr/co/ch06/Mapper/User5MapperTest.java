@@ -26,20 +26,19 @@ class User5MapperTest {
         log.info("insertUser5...");
         // given
         User5DTO user5DTO = User5DTO.builder()
-                            .seq("4")
-                            .name("강감찬")
-                            .gender("M")
-                            .age(22)
-                            .addr("울산")
-                            .build();
+                .name("강감찬")
+                .gender("M")
+                .age(22)
+                .addr("울산")
+                .build();
 
         // when
         mapper.insertUser5(user5DTO);
 
-        //then
+        // then
+        assertNotNull(user5DTO.getSeq_user5());
         User5DTO resultUser5 = mapper.selectUser5(user5DTO.getSeq_user5());
-        Assertions.assertEquals(user5DTO.getSeq_user5(), resultUser5.getSeq_user5());
-
+        Assertions.assertNotNull(resultUser5);
     }
     
     @DisplayName("user5 조회")
