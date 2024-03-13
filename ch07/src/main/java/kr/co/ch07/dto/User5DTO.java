@@ -1,6 +1,6 @@
 package kr.co.ch07.dto;
 
-import kr.co.ch07.entity.board.User1;
+import kr.co.ch07.entity.board.User5;
 import lombok.Builder;
 import lombok.Data;
 
@@ -8,20 +8,20 @@ import lombok.Data;
 @Builder
 public class User5DTO {
 
-    private String uid;
+    private String seq;
     private String name;
-    private String birth;
-    private String hp;
+    private String gender;
     private int age;
+    private String addr;
 
     // Entity 변환 메서드
-    public User1 toEntity(){
-        return User1.builder()
-                .uid(uid)
+    public User5 toEntity(){
+        return User5.builder()
+                .seq(seq)
                 .name(name)
-                .birth(birth)
-                .hp(hp)
+                .gender(gender)
                 .age(age)
+                .addr(addr)
                 .build();
     }
 
