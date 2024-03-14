@@ -13,7 +13,7 @@
                 .then(data => {
                     console.log(data);
 
-                    for (const user of data) {
+                    for(const user of data){
 
                         const tr = `<tr>
                                         <td>${user.seq}</td>
@@ -30,21 +30,21 @@
                         table.insertAdjacentHTML('beforeend', tr);
                     }
                 })
-                .catch((err) => {
+                .catch((err)=>{
                     console.log(err);
                 });
 
             // 동적 이벤트 처리
-            document.addEventListener('click', function (e) {
+            document.addEventListener('click', function(e){
 
-                if (e.target.classList == 'modify') {
+                if(e.target.classList == 'modify'){
                     // 수정
                     const seq = e.target.dataset.seq;
 
                     // 수정화면 이동
                     location.href = `/ch09/user5/modify?seq=${seq}`;
 
-                } else if (e.target.classList == 'delete') {
+                }else if(e.target.classList == 'delete') {
                     // 삭제
                     const tr = e.target.closest('tr');
                     const seq = e.target.dataset.seq;
@@ -54,7 +54,7 @@
                     })
                         .then(response => response.json())
                         .then(data => {
-                            if (data != null) {
+                            if(data != null){
                                 alert(data.seq + '를 삭제 했습니다.');
 
                                 // 태그 동적 삭제
