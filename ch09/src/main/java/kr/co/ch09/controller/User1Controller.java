@@ -39,7 +39,6 @@ public class User1Controller {
           - API를 요청한 사용자에게 응답데이터를 구성해서 부가적인 정보 제공하기 위한 클래스
           - 일반적으로 상태코드(header), 본문내용(body) 을 구성해서 제공
      */
-
     @ResponseBody
     @GetMapping("/user1")
     public List<User1DTO> list(){

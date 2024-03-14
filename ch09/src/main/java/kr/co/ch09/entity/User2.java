@@ -19,13 +19,18 @@ public class User2 {
     private String uid;
     private String name;
     private String birth;
+    private String email;
+    private int age;
     private String addr;
 
     public User2DTO toDTO(){
+
         return User2DTO.builder()
                 .uid(uid)
                 .name(name)
                 .birth(birth)
+                .email(email)
+                .age(age)
                 .addr(addr)
                 .build();
     }
