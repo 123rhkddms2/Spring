@@ -16,7 +16,7 @@ public class ArticleService {
 
     private final ArticleRepository articleRepository;
 
-    // RootConfig Bean 생성/등록
+    // RootConfig Bean 생성/등록 (RootConfig에 만들어져있음)
     private final ModelMapper modelMapper;
 
 
