@@ -3,9 +3,9 @@
       layout:decorate="/layout/userLayout.html">
 
 <div class="container" layout:fragment="content">
-
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script>
-        // 유효성 검사에 사용할 상태변수
+        //유효성 검사에 사용할 상태변수
         let isUidOk   = false;
         let isPassOk  = false;
         let isNameOk  = false;
@@ -23,121 +23,324 @@
 
         window.onload = function (){
 
-            // 문서객체 생성
-            const form = document.querySelector('registerForm');
-            const btnCheckUid   = document.getElementById('btnCheckUid');
-            const btnCheckNick  = document.getElementById('btnCheckNick');
-            const btnCheckEmail = document.getElementById('btnCheckEmail');
-            const btnCheckHp    = document.getElementById('btnCheckHp');
-            const resultUid     = document.getElementsByClassName('resultUid')[0];
-            const resultPass    = document.getElementsByClassName('resultPass')[0];
-            const resultName    = document.getElementsByClassName('resultName')[0];
-            const resultNick    = document.getElementsByClassName('resultNick')[0];
-            const resultEmail   = document.getElementsByClassName('resultEmail')[0];
-            const resultHp      = document.getElementsByClassName('resultHp')[0];
+            // 아이디 유효성 검사
+            const btnCheckUid = document.getElementById('btnCheckUid');
+            const resultUid = document.getElementById('resultUid');
 
-            // 아이디 중복체크
-            btnCheckUid.onclick = function(){
-                e.preventDefault();
+            btnCheckUid.onclick = function() {
+                const type       = this.dataset.type;
+                const input      = document.registerForm[type];
+                const spinner    = this.getElementsByClassName('spinner')[0];
 
-                const uid = form.uid.value;
+                console.log('value : ' + input.value);
 
-                // 유효성 검사
-                if(!uid.match(reUid)){
-                    resultUid.innerText='아이디 형식에 맞지 않습니다.'
-                    resultUid.style.color = 'red';
+                // 정규식 검사
+                if(!input.value.match(reUid)){
+                    input.classList.add('is-invalid');
+                    resultUid.classList.add('invalid-feedback');
+                    resultUid.innerText = '아이디 형식이 맞지 않습니다.';
                     isUidOk = false;
                     return;
                 }
-                console.log('isUidOk1 : ' + isUidOk);
 
-                // 서버 전송
-                const params = '?type=uid&value=' + uid;
-                getCheckResult(url + params. resultUid)
+                spinner.classList.remove('d-none');
 
+                setTimeout(async () => {
 
+                    console.log('value : ' + input.value);
+
+                    const data = await fetchData(`/sboard/user/${type}/${input.value}`);
+
+                    if(data.result > 0){
+                        spinner.classList.add('d-none');
+                        input.classList.add('is-invalid');
+
+                        resultUid.classList.add('invalid-feedback');
+                        resultUid.innerText = '이미 사용중인 아이디 입니다.';
+                        isUidOk = false;
+                    }else{
+                        spinner.classList.add('d-none');
+                        input.classList.remove('is-invalid');
+                        input.classList.add('is-valid');
+
+                        resultUid.classList.remove('invalid-feedback');
+                        resultUid.classList.add('valid-feedback');
+                        resultUid.innerText = '사용 가능한 아이디 입니다.';
+                        isUidOk = true;
+                    }
+                }, 1000);
             }
 
-            const btnCheckUsers = document.querySelectorAll('.btnCheckUser');
-            const resultUsers = document.getElementsByClassName('resultUser');
+            // 비밀번호 유효성 검사
+            const resultPass = document.getElementById('resultPass');
 
-            for(const [i, btnCheckUser] of btnCheckUsers.entries()){
+            document.registerForm.pass2.addEventListener('focusout', ()=>{
 
-                console.log('i : ' + i);
+                const inputPass1 = document.registerForm.pass;
+                const inputPass2 = document.registerForm.pass2;
 
-                // 화살표 함수 쓰면 이벤트 객체 target 또는 this 참조 안됨
-                btnCheckUser.onclick = function() {
+                if(inputPass1.value == inputPass2.value){
 
-                    const type       = this.dataset.type;
-                    const spinner    = this.getElementsByClassName('spinner')[0];
-                    const resultUser = resultUsers[i];
-                    spinner.classList.remove('d-none');
+                    if(!inputPass1.value.match(rePass)){
+                        inputPass1.classList.add('is-invalid');
+                        inputPass2.classList.add('is-invalid');
+                        resultPass.classList.add('invalid-feedback');
+                        resultPass.innerText = '비밀번호 형식에 맞지 않습니다.';
+                        isPassOk = false;
+                    }else{
+                        inputPass1.classList.remove('is-invalid');
+                        inputPass2.classList.remove('is-invalid');
+                        inputPass1.classList.add('is-valid');
+                        inputPass2.classList.add('is-valid');
+
+                        resultPass.classList.remove('invalid-feedback');
+                        resultPass.classList.add('valid-feedback');
+                        resultPass.innerText = '사용 가능한 비밀번호 입니다.';
+                        isPassOk = true;
+                    }
+                }else{
+                    inputPass1.classList.add('is-invalid');
+                    inputPass2.classList.add('is-invalid');
+                    resultPass.classList.add('invalid-feedback');
+                    resultPass.innerText = '비밀번호가 일치하지 않습니다.';
+                    isPassOk = false;
+                }
+            });
+
+            // 이름 유효성 검사
+            const resultName = document.getElementById('resultName');
+
+            document.registerForm.name.addEventListener('focusout', ()=>{
+                const value = document.registerForm.name.value;
+                const inputName = document.registerForm.name;
+
+                if(!value.match(reName)){
+                    inputName.classList.add('is-invalid');
+                    resultName.classList.add('invalid-feedback');
+                    resultName.innerText = '이름 형식이 맞지 않습니다.';
+                    isNameOk = false;
+                }else{
+                    inputName.classList.remove('is-invalid');
+                    inputName.classList.add('is-valid');
+                    resultName.innerText = '';
+                    isNameOk = true;
+                }
+            });
+
+            // 별명 유효성 검사
+            const btnCheckNick = document.getElementById('btnCheckNick');
+            const resultNick = document.getElementById('resultNick');
+
+            btnCheckNick.onclick = function() {
+                const type       = this.dataset.type;
+                const input      = document.registerForm[type];
+                const spinner    = this.getElementsByClassName('spinner')[0];
+
+                console.log('value : ' + input.value);
+
+                // 정규식 검사
+                if(!input.value.match(reNick)){
+                    input.classList.add('is-invalid');
+                    resultNick.classList.add('invalid-feedback');
+                    resultNick.innerText = '닉네임 형식이 맞지 않습니다.';
+                    isNickOk = false;
+                    return;
+                }
+
+                spinner.classList.remove('d-none');
+
+                setTimeout(async () => {
+
+                    const data = await fetchData(`/sboard/user/${type}/${input.value}`);
+
+                    if(data.result > 0){
+                        spinner.classList.add('d-none');
+                        input.classList.add('is-invalid');
+
+                        resultNick.classList.add('invalid-feedback');
+                        resultNick.innerText = '이미 사용중인 닉네임 입니다.';
+                        isNickOk = false;
+                    }else{
+                        spinner.classList.add('d-none');
+                        input.classList.remove('is-invalid');
+                        input.classList.add('is-valid');
+
+                        resultNick.classList.remove('invalid-feedback');
+                        resultNick.classList.add('valid-feedback');
+                        resultNick.innerText = '사용 가능한 닉네임 입니다.';
+                        isNickOk = true;
+                    }
+                }, 1000);
+            }
+
+            // 휴대폰 유효성 검사
+            const btnCheckHp = document.getElementById('btnCheckHp');
+            const resultHp = document.getElementById('resultHp');
+
+            btnCheckHp.onclick = function() {
+                const type       = this.dataset.type;
+                const input      = document.registerForm[type];
+                const spinner    = this.getElementsByClassName('spinner')[0];
+
+                console.log('value : ' + input.value);
+
+                // 정규식 검사
+                if(!input.value.match(reHp)){
+                    input.classList.add('is-invalid');
+                    resultHp.classList.add('invalid-feedback');
+                    resultHp.innerText = '휴대폰 형식이 맞지 않습니다.';
+                    isHpOk = false;
+                    return;
+                }
+
+                spinner.classList.remove('d-none');
+
+                setTimeout(async () => {
+                    const data = await fetchData(`/sboard/user/${type}/${input.value}`);
+
+                    if(data.result > 0){
+                        spinner.classList.add('d-none');
+                        input.classList.add('is-invalid');
+
+                        resultHp.classList.add('invalid-feedback');
+                        resultHp.innerText = '이미 사용중인 휴대폰 입니다.';
+                        isHpOk = false;
+                    }else{
+                        spinner.classList.add('d-none');
+                        input.classList.remove('is-invalid');
+                        input.classList.add('is-valid');
+
+                        resultHp.classList.remove('invalid-feedback');
+                        resultHp.classList.add('valid-feedback');
+                        resultHp.innerText = '사용 가능한 휴대폰 입니다.';
+                        isHpOk = true;
+                    }
+                }, 1000);
+            }
+
+            // 이메일 유효성 검사
+            const divEmailCode = document.getElementById('divEmailCode');
+            const inputEmail = document.getElementById('inputEmail');
+            const btnCheckEmail = document.getElementById('btnCheckEmail');
+            const resultEmail = document.getElementById('resultEmail');
+
+            btnCheckEmail.onclick = function(){
+
+                const type       = this.dataset.type;
+                const spinner = this.getElementsByClassName('spinner')[0];
+
+                // 유효성 검사
+                if(!inputEmail.value.match(reEmail)){
+                    inputEmail.classList.add('is-invalid');
+                    resultEmail.classList.add('invalid-feedback');
+                    resultEmail.innerText = '이메일 형식이 맞지 않습니다.';
+                    isEmailOk = false;
+                    return;
+                }
+
+                spinner.classList.remove('d-none');
+
+                // 이메일 인증코드 발급 및 중복체크 추가 예정
+                setTimeout(async () => {
+
+                    // 인증코드 입력 필드 활성화
+                    spinner.classList.add('d-none');
+                    divEmailCode.classList.remove('d-none');
 
                     console.log('type : ' + type);
+                    console.log('inputEmail value : ' + inputEmail.value);
 
-                    setTimeout(async () => {
+                    const data = await fetchData(`/sboard/user/${type}/${inputEmail.value}`);
+                    console.log('data : ' + data.result);
 
-                        const input = document.registerForm[type];
-                        console.log('value : ' + input.value);
+                    if(data.result > 0){
+                        inputEmail.classList.add('is-invalid');
+                        resultHp.classList.add('invalid-feedback');
+                        resultHp.innerText = '이미 사용중인 이메일 입니다.';
+                        isEmailOk = false;
+                    }
 
-                        const data = await fetchData(`/sboard/user/${type}/${input.value}`);
+                }, 1000);
 
-                        if(data.result > 0){
-                            spinner.classList.add('d-none');
-                            input.classList.add('is-invalid');
-
-                            resultUser.classList.add('invalid-feedback');
-                            resultUser.innerText = '이미 사용중인 아이디 입니다.';
-                        }else{
-                            spinner.classList.add('d-none');
-                            input.classList.add('is-valid');
-
-                            resultUser.classList.add('valid-feedback');
-                            resultUser.innerText = '사용 가능한 아이디 입니다.';
-                        }
-                    }, 1000);
-                }
+                isEmailOk = true;
             }
 
-            // 아이디 유효성 검사
-            const formUser = document.registerForm;
-            formUser.onsubmit = function (){
+            // 이메일 인증코드 확인
+            const btnCheckEmailCode = document.getElementById('btnCheckEmailCode');
+            const inputEmailCode = document.getElementById('inputEmailCode');
+
+            btnCheckEmailCode.onclick = async function (){
+                const data = await fetchData(`/sboard/email/${inputEmailCode.value}`);
+
+                if(!data.result){
+                    inputEmail.classList.add('is-invalid');
+                    inputEmailCode.classList.add('is-invalid');
+                    resultEmail.classList.add('invalid-feedback');
+                    resultEmail.innerText = '인증코드가 일치하지 않습니다.';
+                    isEmailOk = false;
+                }else{
+                    inputEmail.classList.remove('is-invalid');
+                    inputEmailCode.classList.remove('is-invalid');
+                    inputEmail.classList.add('is-valid');
+                    inputEmailCode.classList.add('is-valid');
+                    resultEmail.classList.add('valid-feedback');
+                    resultEmail.innerText = '이메일이 인증되었습니다.';
+                    isEmailOk = true;
+                }
+
+            }
+
+            // 우편번호 주소검색
+            // 다음 우편번호 API 스크립트 상단 추가, postcode 함수 util.js 파일 추가
+            const inputZip = document.getElementById('inputZip');
+            inputZip.onclick = function (){
+                postcode();
+            }
+
+
+
+
+
+
+
+            // 최종 유효성 검사 확인
+            document.registerForm.onsubmit = function (){
 
                 if(!isUidOk){
-                    alert('아이디가 유효하지 않습니다.');
+                    showModal('아이디가 유효하지 않습니다.');
                     return false;
                 }
-                                                // 비밀번호~~~~~~~~ 유효성 검사 통과하게 만들기
+
                 if(!isPassOk){
-                    alert('비밀번호 유효하지 않습니다.');
+                    showModal('비밀번호가 유효하지 않습니다.');
                     return false;
                 }
 
                 if(!isNameOk){
-                    alert('이름이 유효하지 않습니다.');
+                    showModal('이름이 유효하지 않습니다.');
                     return false;
                 }
 
                 if(!isNickOk){
-                    alert('별명이 유효하지 않습니다.');
+                    showModal('별명이 유효하지 않습니다.');
                     return false;
                 }
 
                 if(!isEmailOk){
-                    alert('이메일이 유효하지 않습니다.');
+                    showModal('이메일이 유효하지 않습니다.');
                     return false;
                 }
 
                 if(!isHpOk){
-                    alert('휴대폰이 유효하지 않습니다.');
+                    showModal('휴대폰이 유효하지 않습니다.');
                     return false;
                 }
 
-                //폼 전송
+                // 폼 전송
                 return true;
             }
-
         }
+
 
     </script>
 
@@ -153,11 +356,11 @@
                                     <input class="form-control" id="inputUid" type="text" name="uid" placeholder="아이디 입력"/>
                                     <label for="inputUid">아이디 입력</label>
                                 </div>
-                                <div class="resultUser d-block"></div>
+                                <div id="resultUid" class="d-block"></div>
 
                             </div>
                             <div class="col-md-6">
-                                <button type="button" class="btn btn-outline-secondary btnCheckUser" data-type="uid">
+                                <button type="button" class="btn btn-outline-secondary" id="btnCheckUid" data-type="uid">
                                     <span class="spinner spinner-border spinner-border-sm d-none" aria-hidden="true"></span>
                                     <span class="" role="status">중복확인</span>
                                 </button>
@@ -169,6 +372,7 @@
                                     <input class="form-control" id="inputPass1" type="password" name="pass" placeholder="비밀번호 입력"/>
                                     <label for="inputPass1">비밀번호 입력</label>
                                 </div>
+                                <div id="resultPass" class="d-block"></div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
@@ -184,6 +388,7 @@
                                     <input class="form-control" id="inputName" name="name" type="text" placeholder="이름 입력"/>
                                     <label for="inputName">이름 입력</label>
                                 </div>
+                                <div id="resultName" class="d-block"></div>
                             </div>
                         </div>
 
@@ -193,10 +398,10 @@
                                     <input class="form-control" id="inputNick" name="nick" type="text" placeholder="별명 입력"/>
                                     <label for="inputNick">별명 입력</label>
                                 </div>
-                                <div class="resultUser d-block"></div>
+                                <div id="resultNick" class="d-block"></div>
                             </div>
                             <div class="col-md-6">
-                                <button type="button" class="btn btn-outline-secondary btnCheckUser" data-type="nick">
+                                <button type="button" class="btn btn-outline-secondary" id="btnCheckNick" data-type="nick">
                                     <span class="spinner spinner-border spinner-border-sm d-none" aria-hidden="true"></span>
                                     <span class="" role="status">중복확인</span>
                                 </button>
@@ -208,10 +413,10 @@
                                     <input class="form-control" id="inputHp" name="hp" type="text" placeholder="휴대폰 입력"/>
                                     <label for="inputHp">휴대폰 입력</label>
                                 </div>
-                                <div class="resultUser d-block"></div>
+                                <div id="resultHp" class="d-block"></div>
                             </div>
                             <div class="col-md-6">
-                                <button type="button" class="btn btn-outline-secondary btnCheckUser" data-type="hp">
+                                <button type="button" class="btn btn-outline-secondary" id="btnCheckHp" data-type="hp">
                                     <span class="spinner spinner-border spinner-border-sm d-none" aria-hidden="true"></span>
                                     <span class="" role="status">중복확인</span>
                                 </button>
@@ -224,29 +429,43 @@
                                     <input class="form-control" id="inputEmail" name="email" type="text" placeholder="이메일 입력"/>
                                     <label for="inputEmail">이메일 입력</label>
                                 </div>
+                                <div id="resultEmail" class="d-block"></div>
                             </div>
                             <div class="col-md-6">
-                                <button type="button" class="btn btn-outline-secondary">이메일 인증</button>
+                                <button type="button" class="btn btn-outline-secondary" id="btnCheckEmail" data-type="email">
+                                    <span class="spinner spinner-border spinner-border-sm d-none" aria-hidden="true"></span>
+                                    <span class="" role="status">이메일 인증</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="divEmailCode" class="row mb-3 d-none">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    <input class="form-control" id="inputEmailCode" name="code" type="text" placeholder="이메일 인증코드 입력"/>
+                                    <label for="inputEmail">이메일 인증코드 입력</label>
+                                </div>
+                                <div id="resultEmailCode" class="d-block"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-outline-secondary" id="btnCheckEmailCode" data-type="email">
+                                    <span class="spinner spinner-border spinner-border-sm d-none" aria-hidden="true"></span>
+                                    <span class="" role="status">인증코드 확인</span>
+                                </button>
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input class="form-control" id="inputZip" name="zip" type="text" placeholder="우편번호 검색"/>
+                                    <input class="form-control" id="inputZip" name="zip" type="text" readonly placeholder="우편번호 검색"/>
                                     <label for="inputZip">우편번호 검색</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <button type="button" class="btn btn-outline-secondary">우편번호 검색</button>
-                                <div class="invalid-feedback">
-                                    Please choose a username.
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-floating mb-3">
-                            <input class="form-control" id="inputAddr1" type="addr1" placeholder="기본주소 입력" />
+                            <input class="form-control" id="inputAddr1" type="addr1" readonly placeholder="기본주소 입력" />
                             <label for="inputAddr1">기본주소</label>
                         </div>
 
