@@ -1,16 +1,16 @@
-// 이 코드는 Spring 프레임워크에서 사용되는 설정 클래스이다.
-// 이 클래스는 ModelMapper 라이브러리를 사용하여 DTO(Data Transfer Object)와 Entity 간의 매핑을 위한 빈을 정의합니다.
-// Entity에서 setter를 안쓰는게 좋음, 오류때문에 setter의 강제로 써야하기때문에 setter선언 대신 해당방법을 채택
-
 package kr.co.sboard.config;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+@Getter
+@Setter
 @Configuration
 public class RootConfig {
-
 
     @Bean
     public ModelMapper modelMapper(){
@@ -20,10 +20,19 @@ public class RootConfig {
 
         modelMapper.getConfiguration()
                 .setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE)
+                .setMatchingStrategy(MatchingStrategies.STRICT)
                 .setFieldMatchingEnabled(true);
 
         return modelMapper;
     }
+
+    @Bean
+    public AppInfo appInfo(){
+
+
+        return new AppInfo();
+    }
+
 
 
 }

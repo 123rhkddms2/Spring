@@ -47,6 +47,7 @@ spring:
     jpa:
         database: mysql
         hibernate:
+            # 배포할 때는 none, 개발할 때는 update
             ddl-auto: update
             naming:
                 physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl

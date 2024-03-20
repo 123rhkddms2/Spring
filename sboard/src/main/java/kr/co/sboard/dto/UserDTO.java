@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @Builder
 public class UserDTO {
 
+    // User(Entity)와는 RootConfig를 통해서 매핑
     private String uid;
     private String pass;
     private String name;
