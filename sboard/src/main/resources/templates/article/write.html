@@ -24,8 +24,8 @@
             OOO 글쓰기
         </div>
         <div class="card-body">
-
-            <form name="formWrite" th:action="@{/article/write}" method="post">
+                                                                                    <!-- 파일첨부시 필요 -->
+            <form name="formWrite" th:action="@{/article/write}" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="writer" th:value="${#authentication.principal.user.uid}">
                 <input type="hidden" name="cate" th:value="${cate}">
                 <div class="mb-3">
