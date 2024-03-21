@@ -10,15 +10,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2fc5cbbc-224f-40b5-ae7e-8c223fcd655a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../sboard/src/main/resources/static/assets/demo/chart-area-demo.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../sboard/src/main/resources/static/assets/demo/chart-bar-demo.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../sboard/src/main/resources/static/assets/demo/chart-pie-demo.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../sboard/src/main/resources/static/assets/demo/datatables-demo.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../sboard/src/main/resources/static/assets/img/error-404-monochrome.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../sboard/src/main/resources/static/css/styles.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../sboard/src/main/resources/static/js/datatables-simple-demo.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../sboard/src/main/resources/static/js/scripts.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../sboard/src/main/resources/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../sboard/src/main/java/kr/co/sboard/service/ArticleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../sboard/src/main/java/kr/co/sboard/service/ArticleService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -183,13 +176,6 @@
       </method>
     </configuration>
   </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="jdk-17.0.9-corretto-17.0.9-4caba194b151-107bc6b7" />
-      </set>
-    </attachedChunks>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -229,6 +215,8 @@
       <workItem from="1710131642516" duration="599000" />
       <workItem from="1710132285307" duration="665000" />
       <workItem from="1710729708861" duration="11000" />
+      <workItem from="1710978274580" duration="21000" />
+      <workItem from="1710978368261" duration="57000" />
     </task>
     <servers />
   </component>
