@@ -11,9 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -24,14 +22,14 @@ import java.util.List;
 public class ArticleController {
 
     private final ArticleService articleService;
-    private final FileService fileService;
+
 
     /*
         @ModelAttribute("cate")
          - modelAttribute("cate", cate)와 동일
     */
     @GetMapping("/article/list")
-    public String list(Model model, PageRequestDTO pageRequestDTO) {
+    public String list(Model model, PageRequestDTO pageRequestDTO){
 
         PageResponseDTO pageResponseDTO = articleService.findByParentAndCate(pageRequestDTO);
         log.info("pageResponseDTO : " + pageResponseDTO);
@@ -42,12 +40,12 @@ public class ArticleController {
     }
 
     @GetMapping("/article/write")
-    public String write(@ModelAttribute("cate") String cate) {
+    public String write(@ModelAttribute("cate") String cate){
         return "/article/write";
     }
 
     @PostMapping("/article/write")
-    public String write(HttpServletRequest req, ArticleDTO articleDTO) {
+    public String write(HttpServletRequest req, ArticleDTO articleDTO){
         /*
             글작성을 테스트할 때는 로그인해야하기 때문에
             SecurityConfig 인가 설정 수정할 것
@@ -63,7 +61,7 @@ public class ArticleController {
     }
 
     @GetMapping("/article/view")
-    public String view(int no, Model model) {
+    public String view(int no, Model model){
 
         ArticleDTO articleDTO = articleService.findById(no);
         model.addAttribute(articleDTO);
@@ -71,8 +69,7 @@ public class ArticleController {
         return "/article/view";
     }
 
-    @GetMapping("/article/fileDownload")
-    public ResponseEntity<?> fileDownload(int fno) throws IOException {
-        return fileService.fileDownload(fno);
-    }
+    // fileDownload 메서드 FileController로 이동
+
+
 }

@@ -14,18 +14,19 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 @Slf4j
 @RequiredArgsConstructor
 @Controller
 public class UserController {
 
+
     private final UserService userService;
 
     @GetMapping("/user/login")
     public String login(@ModelAttribute("success") String success){
         // 매개변수 success에 @ModelAttribute 선언으로 View 참조할 수 있음
+
         return "/user/login";
     }
 

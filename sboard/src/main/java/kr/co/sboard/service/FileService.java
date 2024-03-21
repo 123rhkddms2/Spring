@@ -1,7 +1,10 @@
 package kr.co.sboard.service;
 
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 import kr.co.sboard.dto.ArticleDTO;
 import kr.co.sboard.dto.FileDTO;
+import kr.co.sboard.entity.Article;
 import kr.co.sboard.repository.FileRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +16,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -22,10 +24,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -34,10 +33,9 @@ public class FileService {
 
     private final FileRepository fileRepository;
 
-    @Value("${file.upload.path}")
+    @Value("${file.upload.path}")               // application.yml에서 값을 가져와 Bean에 주입(application.yml에 파일경로 설정 있음)
     private String fileUploadPath;
 
-    // fileUpload메서드 컨트롤러에 구현했던거 여기로 옮겼음
     public List<FileDTO> fileUpload(ArticleDTO articleDTO){
 
         // 파일 업로드 시스템 경로 구하기
@@ -88,17 +86,16 @@ public class FileService {
         return files;
     }
 
+
     @Transactional
-    public ResponseEntity<?> fileDownload(int fno) {
+    public ResponseEntity<?> fileDownload(int fno)  {
 
         // 파일 조회
         kr.co.sboard.entity.File file = fileRepository.findById(fno).get();
 
         try {
-
             Path path = Paths.get(fileUploadPath + file.getSName());
-
-            String contentType = Files.probeContentType(path); //path는 파일이 저장된 경로(fileUploadPath)
+            String contentType = Files.probeContentType(path);
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentDisposition(
@@ -112,13 +109,23 @@ public class FileService {
             file.setDownload(file.getDownload() + 1);
             fileRepository.save(file);
 
-
-
             return new ResponseEntity<>(resource, headers, HttpStatus.OK);
 
         }catch (IOException e){
             log.error("fileDownload : " + e.getMessage());
             return new ResponseEntity<>(null, null, HttpStatus.NOT_FOUND);
         }
+    }
+
+    public ResponseEntity<?> fileDownloadCount(int fno)  {
+
+        // 파일 조회
+        kr.co.sboard.entity.File file = fileRepository.findById(fno).get();
+
+        // 다운로드 카운트 Json 생성
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("count", file.getDownload());
+
+        return ResponseEntity.ok().body(resultMap);
     }
 }

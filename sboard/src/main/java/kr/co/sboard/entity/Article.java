@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
+@Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
@@ -42,9 +43,8 @@ public class Article {
     @CreationTimestamp
     private LocalDateTime rdate;
 
-    @OneToMany(mappedBy = "ano")    // 게시글과 파일 엔티티 간의 일대다 관계를 매핑합니다. ano 필드는 File 엔티티의 ano 필드와 매핑됩니다.
-    private List<File> fileList;    //  게시글에 첨부된 파일 목록을 나타내는 필드입니다. 이 필드는 일대다 관계 매핑을 통해 관련 파일 엔티티들을 가질 수 있습니다.
-
-
+    @OneToMany(mappedBy = "ano")    // mappedBy는 매핑 되는 엔티티(테이블)의 FK 컬럼 지정
+    private List<File> fileList;    // 게시글과 파일 엔티티 간의 일대다 관계를 매핑합니다. ano 필드는 File 엔티티의 ano 필드와 매핑됩니다.
+                                    //  게시글에 첨부된 파일 목록을 나타내는 필드입니다. 이 필드는 일대다 관계 매핑을 통해 관련 파일 엔티티들을 가질 수 있습니다.
 
 }
