@@ -23,7 +23,7 @@ spring:
 
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
-        password: 1234
+        password: Rlarhkddms66@
         url: jdbc:mysql://127.0.0.1:3306/jboard
         username: 123rhkddms2
     devtools:
@@ -60,6 +60,9 @@ spring:
         multipart:
             location: uploads/
             max-file-size: 10MB
+
+    thymeleaf:
+        prefix: classpath:/templates
 
 file:
     upload:

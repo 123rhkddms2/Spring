@@ -109,24 +109,37 @@ function alertModal(message){
 
 function confirmModal(message){
 
-    const modal = new bootstrap.Modal(document.getElementById('confirmModal'));
-    modal.getElementsByClassName('modal-body')[0].innerText = message;
-    modal.show(); // 모달 열기
+    promiseConfirmModal(message).then((result) => {
+        console.log("result1 : " + result);
+        return result;
+    });
 
-    // 결과값 반환
+}
+
+function promiseConfirmModal(message){
+
     return new Promise(resolve => {
+
+        const confirmModal = document.getElementById('confirmModal');
+        const btnOk = document.getElementById('btnOk');
+        const btnCancel = document.getElementById('btnCancel');
+        confirmModal.getElementsByClassName('modal-body')[0].innerText = message;
+
+        const modal = new bootstrap.Modal(confirmModal);
+
         // 확인 버튼 클릭 시
-        document.getElementById('btnOk').onclick = function() {
-            modal.hide(); // 모달 닫기
-            resolve(true); // 확인 결과값 반환
-        };
+        btnOk.addEventListener('click', function (){
+            resolve(true);
+        });
 
         // 취소 버튼 클릭 시
-        document.getElementById('btnCancel').onclick = function() {
-            modal.hide(); // 모달 닫기
-            resolve(false); // 취소 결과값 반환
-        };
+        btnCancel.addEventListener('click', function (){
+            resolve(false);
+        });
+
+        modal.show(); // 모달 열기
     });
+
 
     /*
     const modal = document.getElementById('confirmModal');

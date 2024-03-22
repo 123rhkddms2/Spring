@@ -1,6 +1,6 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="/layout/defaultLayout.html">
+      layout:decorate="~{/layout/defaultLayout}">
 
 <div class="container-fluid px-4" layout:fragment="content">
 
@@ -28,6 +28,10 @@
                 if(e.target.dataset.mode == 'remove'){
                     e.preventDefault();
 
+                    const result = confirmModal('정말 삭제 하시겠습니까?');
+                    console.log("result2 : " + result);
+                    /*
+
                     // 해당 삭제에서 가장 가까운 부모 comment 문서객체 생성
                     const comment = e.target.closest('.comment');
 
@@ -36,6 +40,7 @@
 
                     console.log('no : ' + no);
 
+
                     // DELETE용 fetch 함수 정의
                     const data = fetchDelete(`/sboard/comment/${no}`);
 
@@ -43,7 +48,7 @@
                         alertModal("삭제 되었습니다.");
                         comment.remove();
                     }
-
+                    */
                 }else if(e.target.dataset.mode == 'modify'){
 
                     // 수정모드
