@@ -10,10 +10,14 @@ import kr.co.sboard.repository.ArticleRepository;
 import kr.co.sboard.repository.FileRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,7 +34,7 @@ public class ArticleService {
     // RootConfig Bean 생성/등록
     private final ModelMapper modelMapper;
 
-    public PageResponseDTO findByParentAndCate(PageRequestDTO pageRequestDTO){          // ArticleController - list로 감
+    public PageResponseDTO findByParentAndCate(PageRequestDTO pageRequestDTO) {          // ArticleController - list로 감
 
         Pageable pageable = pageRequestDTO.getPageable("no");
 
@@ -50,14 +54,14 @@ public class ArticleService {
                 .build();
     }
 
-    public ArticleDTO findById(int no){                                 // ArticleController - view로 감
+    public ArticleDTO findById(int no) {                                 // ArticleController - view로 감
 
         Optional<Article> optArticle = articleRepository.findById(no);
         log.info("findById...1");
 
         ArticleDTO articleDTO = null;
 
-        if(optArticle.isPresent()){
+        if (optArticle.isPresent()) {
             log.info("findById...2");
             Article article = optArticle.get();
 
@@ -71,7 +75,22 @@ public class ArticleService {
         return articleDTO;
     }
 
-    public void insertArticle(ArticleDTO articleDTO){
+    public ResponseEntity<?> selectArticle(int no) {
+        try {
+            Article article = articleRepository.findById(no).orElseThrow();
+
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(article);
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body("article not found");
+        }
+    }
+
+
+    public void insertArticle(ArticleDTO articleDTO) {
 
         // 파일 첨부 처리
         List<FileDTO> files = fileService.fileUpload(articleDTO);
@@ -88,7 +107,7 @@ public class ArticleService {
         log.info("insertArticle : " + savedArticle.toString());
 
         // 파일 insert
-        for(FileDTO fileDTO : files){
+        for (FileDTO fileDTO : files) {
 
             fileDTO.setAno(savedArticle.getNo());
 
@@ -99,4 +118,21 @@ public class ArticleService {
         }
     }
 
+    @Transactional
+    public void updateArticle(ArticleDTO articleDTO) throws NotFoundException {
+        try {
+            Article articleToUpdate = articleRepository.findById(articleDTO.getNo())
+                    .orElseThrow(() -> new NotFoundException("Article not found: " + articleDTO.getNo()));
+
+            articleToUpdate.setTitle(articleDTO.getTitle());
+            articleToUpdate.setContent(articleDTO.getContent());
+
+            articleRepository.save(articleToUpdate);
+        } catch (NotFoundException e) {
+            // 발생한 예외를 로그에 출력합니다.
+            log.error("Article not found: " + articleDTO.getNo(), e);
+            // 예외를 다시 던져서 컨트롤러에서 처리할 수 있도록 합니다.
+            throw e;
+        }
+    }
 }
