@@ -49,6 +49,7 @@ async function fetchPost(url, jsonData){
 
     }catch (err) {
         console.log(err)
+        return null;
     }
 }
 

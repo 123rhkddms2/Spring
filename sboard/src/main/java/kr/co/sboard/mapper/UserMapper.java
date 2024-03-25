@@ -11,9 +11,11 @@ public interface UserMapper {
     public TermsDTO selectTerms();
     public void insertUser(UserDTO userDTO);
     public int selectCountUser(@Param("type") String type, @Param("value") String value);
+    public UserDTO selectUserForFindId(String name, String email);
     public void selectUsers();
     public void updateUser();
     public void deleteUser();
 
-
+    // 회원 탈퇴 정보 업데이트
+    public void updateUserWithdrawal(UserDTO userDTO);
 }

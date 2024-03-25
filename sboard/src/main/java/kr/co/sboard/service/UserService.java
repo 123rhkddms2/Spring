@@ -4,6 +4,7 @@ import jakarta.mail.Message;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
 import kr.co.sboard.dto.TermsDTO;
 import kr.co.sboard.dto.UserDTO;
 import kr.co.sboard.mapper.UserMapper;
@@ -14,6 +15,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Slf4j
@@ -21,7 +24,9 @@ import java.util.concurrent.ThreadLocalRandom;
 @Service
 public class UserService {
 
+    // UserMapper 주입
     private final UserMapper userMapper;
+
     private final PasswordEncoder passwordEncoder;
 
     // JavaMailSender 주입
@@ -33,6 +38,10 @@ public class UserService {
 
     public int selectCountUser(String type, String value) {
         return userMapper.selectCountUser(type, value);
+    }
+
+    public UserDTO selectUserForFindId(UserDTO userDTO){
+        return userMapper.selectUserForFindId(userDTO.getName(), userDTO.getEmail());
     }
 
     public void insertUser(UserDTO userDTO){
@@ -61,6 +70,8 @@ public class UserService {
         int code = ThreadLocalRandom.current().nextInt(100000, 1000000);
         session.setAttribute("code", String.valueOf(code));
 
+        log.info("code : " + code);
+
         String title = "sboard 인증코드 입니다.";
         String content = "<h1>인증코드는 " + code + "입니다.</h1>";
 
@@ -78,5 +89,13 @@ public class UserService {
 
     }
 
+    // 회원 탈퇴 처리 메서드
+    public void withdrawUser(String uid, LocalDateTime leaveDate) {
+        UserDTO userDTO = UserDTO.builder()
+                .uid(uid)
+                .leaveDate(leaveDate.toString())
+                .build();
 
+        userMapper.updateUserWithdrawal(userDTO);
+    }
 }

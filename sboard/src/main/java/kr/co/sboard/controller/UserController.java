@@ -2,17 +2,18 @@ package kr.co.sboard.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import kr.co.sboard.config.AppInfo;
 import kr.co.sboard.dto.TermsDTO;
 import kr.co.sboard.dto.UserDTO;
 import kr.co.sboard.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -80,6 +81,7 @@ public class UserController {
         return ResponseEntity.ok().body(resultMap);
     }
 
+
     // 이메일 인증 코드 검사
     @ResponseBody
     @GetMapping("/email/{code}")
@@ -101,4 +103,46 @@ public class UserController {
             return ResponseEntity.ok().body(resultMap);
         }
     }
+
+    @GetMapping("/user/findId")
+    public String findId(){
+        return "/user/findId";
+    }
+
+    @GetMapping("/user/findIdResult")
+    public String findIdResult(HttpSession session, Model model){
+        return "/user/findIdResult";
+    }
+
+    @GetMapping("/user/findPassword")
+    public String findPassword(){
+        return "/user/findPassword";
+    }
+
+    @GetMapping("/user/findPasswordChange")
+    public String findPasswordChange(){
+        return "/user/findPasswordChange";
+    }
+
+    // 회원 탈퇴 처리
+    @PostMapping("/my/setting")
+    public String withdrawUser(HttpSession session) {
+        // 세션에서 현재 사용자의 uid 가져오기
+        String uid = (String) session.getAttribute("uid");
+        log.info("Withdrawal requested for user: {}", uid); // 로그 추가
+
+        // 현재 시간 가져오기
+        LocalDateTime leaveDate = LocalDateTime.now();
+
+        // 회원 탈퇴 서비스 호출
+        userService.withdrawUser(uid, leaveDate);
+
+        // 로그아웃 및 세션 종료
+        session.invalidate();
+
+        // 회원 탈퇴 후 리다이렉트할 경로 리턴
+        return "redirect:/user/login";
+    }
+
+
 }
