@@ -93,15 +93,10 @@
 
     </div>
 
-    <!-- 회원 탈퇴 폼 추가 -->
-    <form action="/sboard/my/setting" method="post">
-        <!-- CSRF 토큰 추가 -->
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-        <!-- 회원 탈퇴 버튼 -->
-        <div class="text-end mb-4">
-            <button type="submit" class="btn btn-danger">회원 탈퇴</button>
-        </div>
-    </form>
+    <div class="text-end mb-4">
+        <a th:href="@{#}" class="btn btn-danger">회원탈퇴</a>
+        <a th:href="@{#}" class="btn btn-warning">수정</a>
+    </div>
     <!-- 내용 끝 -->
 </div>
 </html>

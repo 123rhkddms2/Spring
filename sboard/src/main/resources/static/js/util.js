@@ -109,24 +109,14 @@ function alertModal(message){
 }
 
 function confirmModal(message){
-
-    promiseConfirmModal(message).then((result) => {
-        console.log("result1 : " + result);
-        return result;
-    });
-
-}
-
-function promiseConfirmModal(message){
-
-    return new Promise(resolve => {
-
+    return new Promise(function (resolve, reject){
         const confirmModal = document.getElementById('confirmModal');
         const btnOk = document.getElementById('btnOk');
         const btnCancel = document.getElementById('btnCancel');
         confirmModal.getElementsByClassName('modal-body')[0].innerText = message;
 
         const modal = new bootstrap.Modal(confirmModal);
+        modal.show(); // 모달 열기
 
         // 확인 버튼 클릭 시
         btnOk.addEventListener('click', function (){
@@ -137,36 +127,10 @@ function promiseConfirmModal(message){
         btnCancel.addEventListener('click', function (){
             resolve(false);
         });
-
-        modal.show(); // 모달 열기
     });
-
-
-    /*
-    const modal = document.getElementById('confirmModal');
-    modal.getElementsByClassName('modal-body')[0].innerText = message;
-
-    let result = null;
-
-    modal.getElementsByClassName('btnCancel')[0].onclick = function (e){
-        e.preventDefault();
-        result = 'cancel';
-    }
-
-    modal.getElementsByClassName('btnOk')[0].onclick = function (e){
-        e.preventDefault();
-        result = 'ok';
-    }
-
-    const resultModal = new bootstrap.Modal(modal);
-    resultModal.show();
-
-    modal.addEventListener('hidden.bs.modal', function(e){
-        alert('hidden!')
-    });
-    */
 
 }
+
 
 function showInputValid(inputs){
     for(const input of inputs){

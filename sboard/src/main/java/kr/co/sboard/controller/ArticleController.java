@@ -5,12 +5,12 @@ import kr.co.sboard.config.AppInfo;
 import kr.co.sboard.dto.ArticleDTO;
 import kr.co.sboard.dto.PageRequestDTO;
 import kr.co.sboard.dto.PageResponseDTO;
-import kr.co.sboard.entity.Article;
+import kr.co.sboard.entity.Config;
+import kr.co.sboard.repository.ConfigRepository;
 import kr.co.sboard.service.ArticleService;
 import kr.co.sboard.service.FileService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,29 +26,38 @@ import java.util.Optional;
 public class ArticleController {
 
     private final ArticleService articleService;
-    private final AppInfo appInfo;
-
-
+    private final ConfigRepository configRepository;
     /*
         @ModelAttribute("cate")
          - modelAttribute("cate", cate)와 동일
     */
     @GetMapping("/article/list")
-    public String list(Model model, PageRequestDTO pageRequestDTO){
-
+    public String list(Model model, String cate, PageRequestDTO pageRequestDTO){
         PageResponseDTO pageResponseDTO = articleService.findByParentAndCate(pageRequestDTO);
         log.info("pageResponseDTO : " + pageResponseDTO);
 
         model.addAttribute(pageResponseDTO);
-        model.addAttribute(appInfo);
 
         return "/article/list";
     }
 
     @GetMapping("/article/write")
-    public String write(@ModelAttribute("cate") String cate){
+    public String write(Model model, String cate){
+
         return "/article/write";
     }
+
+
+
+    @GetMapping("/article/view")
+    public String view(Model model, String cate, int no){
+        ArticleDTO articleDTO = articleService.findById(no);
+
+        model.addAttribute(articleDTO);
+
+        return "/article/view";
+    }
+
 
     @PostMapping("/article/write")
     public String write(HttpServletRequest req, ArticleDTO articleDTO){
@@ -66,33 +75,6 @@ public class ArticleController {
         return "redirect:/article/list";
     }
 
-    @GetMapping("/article/view")
-    public String view(int no, Model model){
-
-        ArticleDTO articleDTO = articleService.findById(no);
-        model.addAttribute(articleDTO);
-
-        return "/article/view";
-    }
-
-    @GetMapping("/article/modify")
-    public String modify(int no, Model model){
-
-        ArticleDTO articleDTO = articleService.findById(no);
-        model.addAttribute(articleDTO);
-        return "/article/modify";
-    }
-
-    @PutMapping("/article/modify")
-    public String modify(ArticleDTO articleDTO) {
-        try {
-            articleService.updateArticle(articleDTO);
-            return "redirect:/article/list";
-        } catch (NotFoundException e) {
-            // NotFoundException이 발생했을 때 클라이언트에게 오류 응답을 전달합니다.
-            return "error";
-        }
-    }
 
 
     // fileDownload 메서드 FileController로 이동

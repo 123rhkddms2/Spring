@@ -81,7 +81,6 @@ public class UserController {
         return ResponseEntity.ok().body(resultMap);
     }
 
-
     // 이메일 인증 코드 검사
     @ResponseBody
     @GetMapping("/email/{code}")

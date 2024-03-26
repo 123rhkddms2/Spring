@@ -11,14 +11,15 @@ import java.util.List;
 @ToString
 public class PageResponseDTO {
 
-    private List<ArticleDTO> dtoList;       // 페이징된 게시글 목록을 담는 리스트
-    private String cate;                    // 게시글 카테고리
-    private int pg;                         // 현재 페이지 번호
-    private int size;                       // 한 페이지에 출력되는 번호
-    private int total;                      // 전체 게시글 수
-    private int startNo;                    // 현재 페이지의 첫 번째 게시글 번호
-    private int start, end;                 // 현재 페이지의 시작 페이지 번호, 끝 페이지 번호
-    private boolean prev, next;             // 이전 페이지와 다음 페이지의 존재 여부
+    private List<ArticleDTO> dtoList;
+    private String cate;
+
+    private int pg;
+    private int size;
+    private int total;
+    private int startNo;
+    private int start, end;
+    private boolean prev, next;
 
     @Builder
     public PageResponseDTO(PageRequestDTO pageRequestDTO, List<ArticleDTO> dtoList, int total){
@@ -36,6 +37,7 @@ public class PageResponseDTO {
         this.end = end > last ? last : end;
         this.prev = this.start > 1;
         this.next = total > this.end * this.size;
-
     }
+
+
 }

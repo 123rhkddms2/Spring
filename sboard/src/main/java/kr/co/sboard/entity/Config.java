@@ -1,14 +1,13 @@
 package kr.co.sboard.entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @ToString
@@ -40,5 +39,7 @@ public class Config {
 
     @CreationTimestamp
     private LocalDateTime createDate;
+
+
 
 }

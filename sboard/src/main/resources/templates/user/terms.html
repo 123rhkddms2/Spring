@@ -4,23 +4,38 @@
 
 <div class="container" layout:fragment="content">
     <script>
-
-        window.onload = function (){
-
+        window.onload = function () {
             const agree1 = document.getElementsByName('agree1')[0];
             const agree2 = document.getElementsByName('agree2')[0];
             const agree3 = document.getElementsByName('agree3')[0];
             const btnNext = document.getElementsByClassName('btnNext')[0];
 
             btnNext.onclick = () => {
-
-                if(agree1.checked && agree2.checked){
-                    return true;
-                }else{
+                if (agree1.checked && agree2.checked) {
+                    // agree1과 agree2에 대한 동의가 완료된 경우
+                    saveToDatabase(agree1.checked, agree2.checked, agree3.checked); // DB에 저장하는 함수 호출
+                    return true; // 다음 단계로 진행
+                } else {
+                    // 필수 항목에 동의하지 않은 경우
                     showModal('이용약관과 개인정보 취급방침은 필수 동의입니다.');
-                    return false;
+                    return false; // 진행 취소
                 }
             }
+        }
+
+        // DB에 저장하는 함수
+        function saveToDatabase(agree1, agree2, agree3) {
+            // 여기에 DB에 저장하는 로직을 추가하세요.
+            // 예를 들어, Ajax 요청 등을 사용하여 서버에 저장할 수 있습니다.
+            console.log("동의한 내용을 DB에 저장합니다.");
+            console.log("agree1: " + agree1);
+            console.log("agree2: " + agree2);
+            console.log("agree3: " + agree3);
+        }
+
+        // 모달 표시 함수
+        function showModal(message) {
+            alert(message);
         }
     </script>
 

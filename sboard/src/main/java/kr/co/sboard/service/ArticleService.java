@@ -5,22 +5,26 @@ import kr.co.sboard.dto.FileDTO;
 import kr.co.sboard.dto.PageRequestDTO;
 import kr.co.sboard.dto.PageResponseDTO;
 import kr.co.sboard.entity.Article;
+import kr.co.sboard.entity.Config;
 import kr.co.sboard.entity.File;
 import kr.co.sboard.repository.ArticleRepository;
+import kr.co.sboard.repository.ConfigRepository;
 import kr.co.sboard.repository.FileRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -28,19 +32,20 @@ import java.util.Optional;
 public class ArticleService {
 
     private final ArticleRepository articleRepository;
+    private final ConfigRepository configRepository;
     private final FileService fileService;
     private final FileRepository fileRepository;
-
-    // RootConfig Bean 생성/등록
     private final ModelMapper modelMapper;
 
-    public PageResponseDTO findByParentAndCate(PageRequestDTO pageRequestDTO) {          // ArticleController - list로 감
+    public PageResponseDTO findByParentAndCate(PageRequestDTO pageRequestDTO){
 
+        log.info("findByParentAndCate...1");
         Pageable pageable = pageRequestDTO.getPageable("no");
 
+        log.info("findByParentAndCate...2");
         Page<Article> pageArticle = articleRepository.findByParentAndCate(0, pageRequestDTO.getCate(), pageable);
 
-
+        log.info("findByParentAndCate...3 : " + pageArticle);
         List<ArticleDTO> dtoList = pageArticle.getContent().stream()
                 .map(entity -> modelMapper.map(entity, ArticleDTO.class))
                 .toList();
@@ -54,14 +59,14 @@ public class ArticleService {
                 .build();
     }
 
-    public ArticleDTO findById(int no) {                                 // ArticleController - view로 감
+    public ArticleDTO findById(int no){
 
         Optional<Article> optArticle = articleRepository.findById(no);
         log.info("findById...1");
 
         ArticleDTO articleDTO = null;
 
-        if (optArticle.isPresent()) {
+        if(optArticle.isPresent()){
             log.info("findById...2");
             Article article = optArticle.get();
 
@@ -75,23 +80,10 @@ public class ArticleService {
         return articleDTO;
     }
 
-    public ResponseEntity<?> selectArticle(int no) {
-        try {
-            Article article = articleRepository.findById(no).orElseThrow();
 
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(article);
-        } catch (Exception e) {
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .body("article not found");
-        }
-    }
+    public void insertArticle(ArticleDTO articleDTO){
 
-
-    public void insertArticle(ArticleDTO articleDTO) {
-
+        // 파일 첨부 처리
         // 파일 첨부 처리
         List<FileDTO> files = fileService.fileUpload(articleDTO);
 
@@ -107,7 +99,7 @@ public class ArticleService {
         log.info("insertArticle : " + savedArticle.toString());
 
         // 파일 insert
-        for (FileDTO fileDTO : files) {
+        for(FileDTO fileDTO : files){
 
             fileDTO.setAno(savedArticle.getNo());
 
@@ -118,21 +110,6 @@ public class ArticleService {
         }
     }
 
-    @Transactional
-    public void updateArticle(ArticleDTO articleDTO) throws NotFoundException {
-        try {
-            Article articleToUpdate = articleRepository.findById(articleDTO.getNo())
-                    .orElseThrow(() -> new NotFoundException("Article not found: " + articleDTO.getNo()));
 
-            articleToUpdate.setTitle(articleDTO.getTitle());
-            articleToUpdate.setContent(articleDTO.getContent());
 
-            articleRepository.save(articleToUpdate);
-        } catch (NotFoundException e) {
-            // 발생한 예외를 로그에 출력합니다.
-            log.error("Article not found: " + articleDTO.getNo(), e);
-            // 예외를 다시 던져서 컨트롤러에서 처리할 수 있도록 합니다.
-            throw e;
-        }
-    }
 }
