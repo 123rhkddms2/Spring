@@ -12,12 +12,12 @@ import java.util.List;
 public interface User5Repository extends JpaRepository<User5, String> {
 
     // 사용자 정의 쿼리메서드
-    public User5 findUser5ByUid(String seq);
+    public User5 findUser5BySeq(String seq);
     public List<User5> findUser5ByName(String name);
     public List<User5> findUser5ByNameNot(String name);
 
-    public User5 findUser5ByUidAndName(String seq, String name);
-    public List<User5> findUser5ByUidOrName(String seq, String name);
+    public User5 findUser5BySeqAndName(String seq, String name);
+    public List<User5> findUser5BySeqOrName(String seq, String name);
 
     public List<User5> findUser5ByAgeGreaterThan(int age);
     public List<User5> findUser5ByAgeGreaterThanEqual(int age);
@@ -35,7 +35,7 @@ public interface User5Repository extends JpaRepository<User5, String> {
     public List<User5> findUser5ByOrderByAgeDesc();
     public List<User5> findUser5ByAgeGreaterThanOrderByAgeDesc(int age);
 
-    public int countUser5ByUid(String seq);
+    public int countUser5BySeq(String seq);
     public int countUser5ByName(String name);
 
     // JPQL 정의
