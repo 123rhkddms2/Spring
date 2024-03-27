@@ -24,6 +24,10 @@ public class PageRequestDTO {       // 페이지 요청 정보를 정달하기 �
 
     private String cate;            // 카테고리
 
+    private String type;
+    private String keyword;
+
+
     public Pageable getPageable(String sort){           // 페이지 요청정보를 전달하는 Pageale 객체 생성
         return PageRequest.of(this.pg - 1, this.size, Sort.by(sort).descending());      // sort파라미터를 사용해 결과를 정렬함
     }

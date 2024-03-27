@@ -33,7 +33,17 @@ public class ArticleController {
     */
     @GetMapping("/article/list")
     public String list(Model model, String cate, PageRequestDTO pageRequestDTO){
-        PageResponseDTO pageResponseDTO = articleService.findByParentAndCate(pageRequestDTO);
+
+        PageResponseDTO pageResponseDTO = null;
+
+        if(pageRequestDTO.getKeyword() == null) {
+            // 일반 글 목록 조회
+            pageResponseDTO = articleService.selectArticles(pageRequestDTO);
+        }else {
+            // 검색 글 목록 조회
+            pageResponseDTO = articleService.searchArticles(pageRequestDTO);
+        }
+
         log.info("pageResponseDTO : " + pageResponseDTO);
 
         model.addAttribute(pageResponseDTO);
@@ -42,7 +52,12 @@ public class ArticleController {
     }
 
     @GetMapping("/article/write")
-    public String write(Model model, String cate){
+    public String write(Model model, String cate, PageRequestDTO pageRequestDTO){
+
+        PageResponseDTO pageResponseDTO = PageResponseDTO.builder()
+                                    .pageRequestDTO(pageRequestDTO)
+                                    .build();
+        model.addAttribute(pageResponseDTO);
 
         return "/article/write";
     }
@@ -57,7 +72,6 @@ public class ArticleController {
 
         return "/article/view";
     }
-
 
     @PostMapping("/article/write")
     public String write(HttpServletRequest req, ArticleDTO articleDTO){
