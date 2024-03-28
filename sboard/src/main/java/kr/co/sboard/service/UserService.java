@@ -40,6 +40,11 @@ public class UserService {
         return userMapper.selectUserForFindId(userDTO.getName(), userDTO.getEmail());
     }
 
+    // 비밀번호 찾기를 위해 사용자 정보를 조회하는 메서드
+    public UserDTO selectUserForFindPassword(UserDTO userDTO){
+        return userMapper.selectUserForFindPassword(userDTO.getUid(), userDTO.getEmail());
+    }
+
     // 사용자를 등록하는 메서드
     public void insertUser(UserDTO userDTO){
 
@@ -58,7 +63,7 @@ public class UserService {
     @Value("${spring.mail.username}")
     private String sender;
 
-    // 이메일을 통해 인증 코드를 전송하는 메서드
+    // 이메일을 통해 인증 코드를 전송하는 메서드(register)
     public void sendEmailCode(HttpSession session, String receiver){
 
         log.info("sender : " + sender);
@@ -89,6 +94,7 @@ public class UserService {
 
     }
 
+    // 이메일을 통해 인증 코드를 전송하는 메서드(findId)
     public String checkUserForFindId(HttpSession session, String email){
 
         log.info("sender : " + sender);
@@ -118,6 +124,39 @@ public class UserService {
         }
 
         return userMapper.checkUserForFindId(email);
+
+    }
+
+    // 이메일을 통해 인증 코드를 전송하는 메서드(findPassword)
+    public String checkUserForFindPassword(HttpSession session, String email){
+
+        log.info("sender : " + sender);
+
+        // MimeMessage 생성
+        MimeMessage message = javaMailSender.createMimeMessage();
+
+        // 인증코드 생성 후 세션 저장
+        int code = ThreadLocalRandom.current().nextInt(100000, 1000000);
+        session.setAttribute("code", String.valueOf(code));
+
+        log.info("code : " + code);
+
+        String title = "sboard 인증코드 입니다.";
+        String content = "<h1>인증코드는 " + code + "입니다.</h1>";
+
+        try {
+            message.setFrom(new InternetAddress(sender, "보내는 사람", "UTF-8"));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
+            message.setSubject(title);
+            message.setContent(content, "text/html;charset=UTF-8");
+
+            javaMailSender.send(message);
+
+        }catch(Exception e){
+            log.error("sendEmailConde : " + e.getMessage());
+        }
+
+        return userMapper.checkUserForFindPassword(email);
 
     }
 

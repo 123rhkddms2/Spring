@@ -10,5 +10,5 @@ public interface ArticleRepositoryCustom {
 
     public Page<Tuple> selectArticles(PageRequestDTO pageRequestDTO, Pageable pageable);
 
-    public Page<Article> searchArticles(PageRequestDTO pageRequestDTO, Pageable pageable);
+    public Page<Tuple> searchArticles(PageRequestDTO pageRequestDTO, Pageable pageable);
 }

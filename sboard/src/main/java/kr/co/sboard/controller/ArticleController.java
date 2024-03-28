@@ -86,7 +86,7 @@ public class ArticleController {
 
         articleService.insertArticle(articleDTO);
 
-        return "redirect:/article/list";
+        return "redirect:/article/list?cate="+articleDTO.getCate();
     }
 
 
