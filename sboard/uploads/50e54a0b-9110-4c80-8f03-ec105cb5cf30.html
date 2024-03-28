@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4. CSS 기타선택자</title>
+    <!--
+        날짜 : 2024/01/23
+        이름 : 김광은
+        내용 : CSS 기타선택자 실습
+    -->
+    <style>
+    /* 속성 선택자 */
+    input[value]{
+        color: white;
+        background : black;
+    }
+    input[name=uid]{
+        color: red;
+    }
+
+    input[name=pass]{
+        color: blue;
+    }
+
+    /* 반응 선택자 */
+    .box{
+        width: 100px;
+        height: 100px;
+        border: 1px solid black;
+    }
+
+    .box1:active {
+        background: red;
+    }
+    .box2:hover {
+        background: blue;
+    }
+
+    /* 가상요소 선택자 */
+    #won > li::after{
+        content: '원';
+    }
+
+    #dollar> li::before{
+        content: '$';
+    }
+
+
+
+    </style>
+</head>
+<body>
+    <h3>4. CSS 기타선택자</h3>
+
+    <h4>속성선택자</h4>
+    <input type="text" name="uid">
+    <input type="text" name="pass">
+    <input type="submit" value="로그인">
+
+    <h4>반응선택자</h4>
+    <div class="box box1">box1</div>
+    <div class="box box2">box2</div>
+    
+
+    <h4>가상요소선택자</h4>
+    <ul id="won">
+        <li>2,000</li>
+        <li>2,500</li>
+        <li>3,000</li>
+    </ul>
+
+    <ul id="dollar">
+        <li>2,000</li>
+        <li>2,500</li>
+        <li>3,000</li>
+    </ul>
+
+    
+</body>
+</html>

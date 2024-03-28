@@ -62,7 +62,7 @@ public class UserController {
         return "redirect:/user/login?success=200";
     }
 
-    // 이메일 중복 확인(register에서 동작)
+    // 이메일 전송확인, 중복 확인(register)
     @ResponseBody
     @GetMapping("/user/{type}/{value}")
     public ResponseEntity<?> checkUser(HttpSession session,
@@ -89,26 +89,7 @@ public class UserController {
         return ResponseEntity.ok().body(resultMap);
     }
 
-    // findId - 이메일 인증 코드를 확인
-    // 사용자가 입력한 인증 코드와 세션에 저장된 코드를 비교하여 일치 여부를 확인
-    @ResponseBody
-    @GetMapping("/user/findId/sendEmailCode/{email}")
-    public ResponseEntity<?> checkUserForFindId(HttpSession session,
-                                                @PathVariable("email")  String email){
-
-        //log.info("session : " + session);
-        log.info("email : " + email);
-
-        userService.checkUserForFindId(session, email);
-
-        // Json 생성
-        Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put("result", true);
-
-        return ResponseEntity.ok().body(resultMap);
-    }
-
-    // 아이디 찾기 기능에서 이메일을 입력받고, 해당 이메일로 인증 코드를 전송
+    // 이메일 전송확인(findId, findPassword)
     @ResponseBody
     @GetMapping("/email/{code}")
     public ResponseEntity<?> checkEmail(HttpSession session, @PathVariable("code")  String code){
@@ -130,6 +111,42 @@ public class UserController {
         }
     }
 
+    // 이메일 인증 코드를 확인(findId) - 입력한 코드와 세션에 저장된 코드 비교, 일치여부 확인
+    @ResponseBody
+    @GetMapping("/user/findId/sendEmailCode/{email}")
+    public ResponseEntity<?> checkUserForFindId(HttpSession session,
+                                                @PathVariable("email")  String email){
+
+        //log.info("session : " + session);
+        log.info("email : " + email);
+
+        userService.checkUserForFindId(session, email);
+
+        // Json 생성
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("result", true);
+
+        return ResponseEntity.ok().body(resultMap);
+    }
+
+    // 이메일 인증 코드를 확인(findPassword) - 입력한 코드와 세션에 저장된 코드 비교, 일치여부 확인
+    @ResponseBody
+    @GetMapping("/user/findPassword/sendEmailCode/{email}")
+    public ResponseEntity<?> checkUserForFindPassword(HttpSession session,
+                                                      @PathVariable("email")  String email){
+
+        //log.info("session : " + session);
+        log.info("email : " + email);
+
+        userService.checkUserForFindPassword(session, email);
+
+        // Json 생성
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("result", true);
+
+        return ResponseEntity.ok().body(resultMap);
+    }
+
     // 아이디 찾기 페이지를 요청
     @GetMapping("/user/findId")
     public String findId(){
@@ -139,18 +156,22 @@ public class UserController {
     // 아이디 찾기 결과를 처리
     @PostMapping("/user/findIdResult")
     public String findIdResult(UserDTO userDTO, Model model){
-        UserDTO findUser = userService.selectUserForFindId(userDTO);
-        model.addAttribute("user", findUser);
+        UserDTO findUserId = userService.selectUserForFindId(userDTO);
+        model.addAttribute("user", findUserId);
         return "/user/findIdResult";
     }
 
+    // 비밀번호 찾기 페이지를 요청
     @GetMapping("/user/findPassword")
     public String findPassword(){
         return "/user/findPassword";
     }
 
-    @GetMapping("/user/findPasswordChange")
-    public String findPasswordChange(){
+    /// 비밀번호 찾기 결과를 처리(비밀번호 변경화면)
+    @PostMapping("/user/findPasswordChange")
+    public String findPasswordChange(UserDTO userDTO, Model model){
+        UserDTO findUserPassword = userService.selectUserForFindPassword(userDTO);
+        model.addAttribute("user", findUserPassword);
         return "/user/findPasswordChange";
     }
 }
