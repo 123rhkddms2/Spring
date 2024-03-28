@@ -28,6 +28,7 @@ public class User implements OAuth2User {
     private int age;
     private String hp;
     private String role;
+    private String provider;
 
     @CreationTimestamp
     private LocalDateTime regDate;

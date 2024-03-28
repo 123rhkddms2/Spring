@@ -4,10 +4,9 @@ package kr.co.oauth.oauth2;
 import lombok.AllArgsConstructor;
 
 import java.util.Map;
-import java.util.Objects;
 
 @AllArgsConstructor
-public class KakaoInfo {
+public class GoogleInfo {
 
     private Map<String, Object> attributes;
 
@@ -16,19 +15,19 @@ public class KakaoInfo {
     }
 
     public String getProvider(){
-        return "kakao";
+        return "google";
     }
 
-    public String getNickName(){
+    public String getEmail(){
         Map<?, ?> map = (Map<?, ?>) attributes.get("properties");
-        String nickname = (String) map.get("nickname");
-        return nickname;
+        String email = (String) map.get("email");
+        return email;
     }
 
-    public String getProfileImage(){
+    public String getProfile(){
         Map<?, ?> map = (Map<?, ?>) attributes.get("properties");
-        String image = (String) map.get("image");
-        return image;
+        String profile = (String) map.get("profile");
+        return profile;
     }
 
 }

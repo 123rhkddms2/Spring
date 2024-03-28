@@ -10,9 +10,12 @@
     <form>
         <input type="text" name="uid">
         <input type="password" name="pass">
-        <input type="submit" name="로그인">
+        <input type="submit" value="로그인">
     </form>
 
-    <a th:href="@{/oauth2/authorization/kakao}">카카오 로그인</a>
+    <a th:href="@{/oauth2/authorization/kakao}">Kakao 로그인</a><br>
+    <a th:href="@{/oauth2/authorization/google}">Google 로그인</a>
+
+
 </body>
 </html>

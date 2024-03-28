@@ -1,5 +1,8 @@
 package kr.co.oauth.security;
 
+import kr.co.oauth.oauth2.OAuth2UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,8 +12,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+@RequiredArgsConstructor
 @Configuration
 public class SecurityConfig {
+
+
+    private final OAuth2UserService oauth2UserService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -25,13 +32,14 @@ public class SecurityConfig {
 
         // 로그아웃 설정
         httpSecurity.logout(logout -> logout
-                .invalidateHttpSession(true)
-                .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
-                .logoutSuccessUrl("/user/login?success=300"));
+                                        .invalidateHttpSession(true)
+                                        .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
+                                        .logoutSuccessUrl("/user/login?success=300"));
 
         // OAuth 설정
-        httpSecurity.oauth2Login(config -> config.loginPage("/user/login")
-                                                .defaultSuccessUrl("/"));
+        httpSecurity.oauth2Login(config -> config
+                .loginPage("/user/login")
+                .defaultSuccessUrl("/"));
 
         /*
             인가 설정
@@ -39,10 +47,10 @@ public class SecurityConfig {
              - 자원 요청의 추가 인가 처리 확장과 redirect 기본 해제를 위해 마지막에 .anyRequest().permitAll() 설정
          */
         httpSecurity.authorizeHttpRequests(authorize -> authorize
-                                                                .requestMatchers("/article/**").permitAll()
-                                                                .requestMatchers("/admin/**").hasAuthority("ADMIN")
-                                                                .requestMatchers("/manager/**").hasAnyAuthority("ADMIN", "MANAGER")
-                                                                .anyRequest().permitAll());
+                .requestMatchers("/article/**").permitAll()
+                .requestMatchers("/admin/**").hasAuthority("ADMIN")
+                .requestMatchers("/manager/**").hasAnyAuthority("ADMIN", "MANAGER")
+                .anyRequest().permitAll());
 
         // 사이트 위변조 방지 설정
         httpSecurity.csrf(CsrfConfigurer::disable);
