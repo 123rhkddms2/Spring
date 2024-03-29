@@ -175,16 +175,6 @@ public class UserController {
         return "/user/findPasswordChange";
     }
 
-    // 비밀번호 변경 결과를 처리
-    @PostMapping("/user/findPasswordChange")
-    public String findPasswordChange(UserDTO userDTO, HttpServletRequest req){
-        userDTO.setRegip(regip);
 
-        log.info(userDTO.toString());
-
-        userService.updateUserChangePassword(userDTO);
-
-        return "redirect:/user/login?success=200";
-    }
 
 }
