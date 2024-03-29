@@ -18,6 +18,8 @@ public interface UserMapper {
     public String checkUserForFindPassword(@Param("email") String email);
     public UserDTO selectUserForFindPassword(String uid, String email);
 
+    public void updateUserForPasswordChange(UserDTO userDTO);
+
     public void selectUsers();
     public void updateUser();
     public void deleteUser();

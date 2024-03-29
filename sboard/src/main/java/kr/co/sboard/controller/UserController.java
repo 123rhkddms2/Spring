@@ -167,11 +167,12 @@ public class UserController {
         return "/user/findPassword";
     }
 
-    /// 비밀번호 찾기 결과를 처리(비밀번호 변경화면)
+    // 비밀번호 찾기 결과를 처리(비밀번호 변경화면)
     @PostMapping("/user/findPasswordChange")
     public String findPasswordChange(UserDTO userDTO, Model model){
         UserDTO findUserPassword = userService.selectUserForFindPassword(userDTO);
         model.addAttribute("user", findUserPassword);
         return "/user/findPasswordChange";
     }
+
 }

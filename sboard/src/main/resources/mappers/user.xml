@@ -27,6 +27,12 @@
         select * from user where uid=#{uid} and email=#{email}
     </select>
 
+    <update id="updateUserForPassword">
+        UPDATE user
+        SET pass = #{pass}
+        WHERE uid = #{uid}
+    </update>
+
 
     <insert id="insertUser">
         insert into user set
