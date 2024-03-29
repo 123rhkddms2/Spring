@@ -303,6 +303,7 @@
                 <div class="card-body">
                     <form th:action="@{/user/register}" name="registerForm" method="post">
                         <div class="row mb-3">
+
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
                                     <input class="form-control inputUid" id="inputUid" type="text" name="uid"
@@ -310,8 +311,8 @@
                                     <label for="inputUid">아이디 입력</label>
                                 </div>
                                 <div id="resultUid" class="d-block"></div>
-
                             </div>
+
                             <div class="col-md-6">
                                 <button type="button" class="btn btn-outline-secondary" id="btnCheckUid"
                                         data-type="uid">
@@ -320,7 +321,9 @@
                                     <span class="" role="status">중복확인</span>
                                 </button>
                             </div>
+
                         </div>
+
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
