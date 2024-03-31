@@ -1,0 +1,88 @@
+1. AWS EC2 생성
+   - free tier 선택
+   - 키페어 생성 안함(기본값)
+
+2. 리눅스 업데이트(EC2 브라우저 연결)
+   $ sudo apt update
+   $ sudo apt upgrade
+ 
+3. root 계정 비밀번호 생성(EC2 브라우저 연결)
+   $ sudo passwd root
+
+4. root 계정 로그인 설정(EC2 브라우저 연결)
+   $ sudo vi /etc/ssh/sshd_config
+   (33쯤 : #PermitRootLogin prohibit-XXXXX -> 앞에 주석 #기호 지우고, prohibit-XXXXX 삭제후 yes로 변경)
+   (57쯤 : PasswordAuthentication no를 yes로 변경)
+
+   $ sudo mkdir /root/.ssh 
+   $ sudo cp /home/사용자계정명(ec2이름이라 ubuntu가 들어감)/.ssh/authorized_keys   /root/.ssh
+   $ sudo systemctl restart ssh
+   $ exit
+
+	★인바운드 규칙추가(SSH, 포트22, 0.0.0.0/0, 설명:ssh)
+
+5. ssh 원격 접속
+  - Putty로 AWS EC2 접속하기
+	폰트 : 12
+  - (host name은 IP주소, 포트 : 22 , connection type : SSH, username : root)
+
+6. 서버 구축
+  - apache 설치
+		sudo apt update
+		sudo apt install apache2
+		sudo systemctl status apache2
+		sudo systemctl restart apache2
+
+  - MySQL 설치
+		sudo apt update
+		sudo apt install mysql-server
+		sudo mysql_secure_installation		y, 0, y, n, y, y
+		sudo systemctl restart mysql
+
+		$ sudo mysql -u root
+		mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY '새로운_비밀번호';
+		mysql> CREATE USER 'root'@'%' IDENTIFIED BY '새로운_비밀번호';
+		mysql> GRANT ALL PRIVILEGES ON *.* TO 'root'@'%';
+		mysql> FLUSH PRIVILEGES;
+		mysql> exit
+
+		// MySQL 원격 접속 허용(mysqld.cnf 31번 라인 수정)
+		chhak@ubuntu-server:~$ sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf
+		... 31 bind-address = 127.0.0.1 ← 0.0.0.0 으로 수정
+		:wq
+
+		$ sudo systemctl restart mysql
+
+		★인바운드 규칙 추가 : mysql포트 3306, 0.0.0.0/0
+
+		// HeidiSQL 연결 확인
+		새로운세션열기(AWS)
+		네트워크유형 :  mysql
+		- 호스트 : ip주소
+		- 사용자 : root - 비밀번호 : 새로운_비밀번호
+		mysql포트(3306)
+
+
+  - Java(JDK) 설치
+		$ wget JDK_다운로드_주소
+		$ sudo dpkg –i JDK_패키지_파일명.deb
+		$ java -version
+		
+
+  - Tomcat 설치
+		$ sudo apt list tomcat*
+		$ sudo dpkg –i JDK_패키지_파일명.deb
+
+
+
+7. 방화벽(보안 그룹) 설정
+   - 내 EC2 서버에 적용된 보안 그룹 확인(launch-wizard-숫자)
+   - 왼쪽 메뉴 > 네트워크 및 보안 > 보안 그룹
+   - 인바운드 규칙 > 규칙 편집 > 규칙추가 > 'HTTP' 선택, 0.0.0.0/0 선택 후 규칙 저장
+   - 인바운드 규칙 > 규칙 편집 > 규칙추가 > 'MySQL' 선택, 0.0.0.0/0 선택 후 규칙 저장
+   - 인바운드 규칙 > 규칙 편집 > 규칙추가 > '사용자 지정 TCP' 선택, Port번호 8080 입력, 0.0.0.0/0 선택, 설명 Tomcat 입력 후 규칙 저장
+
+8. 서비스 확인
+   - Apache 브라우저 확인
+   - HeidiSQL 연결 확인
+   - Tomcat 브라우저 확인
